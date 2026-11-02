@@ -1,3 +1,5 @@
+using server.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +17,16 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
+});
+
+// services
+builder.Services.AddScoped<AlpacaService>();
+
+// http clients
+builder.Services.AddHttpClient("AlpacaAPI", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["API:AlpacaBaseUrl"]!);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
 var app = builder.Build();
