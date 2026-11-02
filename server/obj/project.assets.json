@@ -89,11 +89,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VSCODE\\test\\server\\server.csproj",
+      "projectUniqueName": "D:\\VSCODE\\LoyaltyApp\\server\\server.csproj",
       "projectName": "server",
-      "projectPath": "D:\\VSCODE\\test\\server\\server.csproj",
+      "projectPath": "D:\\VSCODE\\LoyaltyApp\\server\\server.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "D:\\VSCODE\\test\\server\\obj\\",
+      "outputPath": "D:\\VSCODE\\LoyaltyApp\\server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

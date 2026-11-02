@@ -1,11 +1,14 @@
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
+using server.Services;
 
 namespace server.Controllers;
 
+// learn how to use route mapping, route params and query params
+
 [ApiController]
-[Route("test_api")]
-public class APIController : ControllerBase
+[Route("[controller]")]
+public class APIController(AlpacaService _alpacaService) : ControllerBase
 {
     [HttpGet("[action]")]
     public string GetString()

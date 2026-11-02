@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2REUUysvTEY=",
+  "dgSpecHash": "oAjEe/ejkZs=",
   "success": true,
-  "projectFilePath": "D:\\VSCODE\\test\\server\\server.csproj",
+  "projectFilePath": "D:\\VSCODE\\LoyaltyApp\\server\\server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.11\\microsoft.aspnetcore.openapi.10.0.11.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.openapi\\2.7.5\\microsoft.openapi.2.7.5.nupkg.sha512"

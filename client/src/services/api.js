@@ -42,7 +42,7 @@ export class HTTP_CLIENT {
 }
 
 export const AUR = new API_URL_REGISTRY({
-    default: "https://alpacaapi.xcode.com.my/api",
+    alpaca: "https://alpacaapi.xcode.com.my/api",
     test: "https://studentapp.xcode.com.my/api",
-    server: "http://localhost:5218/test_api"
+    server: "http://localhost:5218/api"
 });
