@@ -8,7 +8,7 @@ namespace server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class APIController(AlpacaService _alpacaService) : ControllerBase
+public class APIController : ControllerBase
 {
     [HttpGet("[action]")]
     public string GetString()
