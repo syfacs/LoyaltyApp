@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using server;
 using server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,40 @@ builder.Services.AddHttpClient("AlpacaAPI", client =>
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
+// sessions and cookies
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);
+        options.SlidingExpiration = true;
+
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.SameSite = SameSiteMode.Lax;
+
+        options.Events.OnRedirectToLogin = ctx =>
+        {
+            ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return Task.CompletedTask;
+        };
+        options.Events.OnRedirectToAccessDenied = ctx =>
+        {
+            ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
+            return Task.CompletedTask;
+        };
+    });
+// policies (not using this because there is no need for a small application, but im keeping this here as an example)
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("Client", p => p.RequireRole(Roles.Member))
+    .AddPolicy("Admin", p => p.RequireRole(Roles.Admin));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,7 +81,9 @@ app.UseHttpsRedirection();
 
 app.UseCors("ReactPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllers();
 
