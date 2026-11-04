@@ -16,13 +16,15 @@ public class APIController : ControllerBase
         return "Hello World";
     }
 
-    [HttpGet("[action]/{id:int}")]
-    public object GetObject([FromRoute] int id)
+    // mix of both Route Params and Query Params
+    [HttpGet("[action]/{id:int}/other/{other_id:int}")]
+    public object GetObject([FromRoute] int id, [FromRoute] int other_id, [FromQuery] string? name)
     {
         return new
         {
             Id = id,
-            Name = "John"
+            OtherId = other_id,
+            Name = name,
         };
     }
 
