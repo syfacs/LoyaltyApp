@@ -17,12 +17,12 @@ public enum AuthenticationStatus
 [Authorize(Roles = Roles.Member)]
 [ApiController]
 [Route("api/[controller]")]
-public class MemberController : ControllerBase
+public class AUTHTemplate : ControllerBase
 {
     private readonly HttpClient _client;
     private readonly IAuthorizationService _auth;
 
-    public MemberController(IHttpClientFactory factory, IAuthorizationService authorizationService)
+    public AUTHTemplate(IHttpClientFactory factory, IAuthorizationService authorizationService)
     {
         _client = factory.CreateClient("AlpacaAPI");
 
