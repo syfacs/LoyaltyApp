@@ -18,14 +18,16 @@ public record ServiceResult<T>(bool Success, T? Data, string Message, int Status
 
     // Turns a failed result into the error body the frontend expects.
     // Pass sessionExpired = true for calls made with a token, so a 401 tells the frontend to go back to the login page.
-    public IActionResult ToError(bool sessionExpired = false)
+    public IActionResult ToError(bool sessionExpired = false, Func<string, string?>? overrideMessage = null)
     {
         var expired = sessionExpired && StatusCode == 401;
+        string message = expired ? "Your session has expired. Please log in again." : Message;
+        string? overriddenMessage = overrideMessage?.Invoke(message);
 
         return new ObjectResult(new
         {
             success = false,
-            message = expired ? "Your session has expired. Please log in again." : Message,
+            message = overriddenMessage ?? message,
             sessionExpired = expired,
         })
         {

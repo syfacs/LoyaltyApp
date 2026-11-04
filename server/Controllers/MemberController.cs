@@ -257,7 +257,10 @@ public class MemberController : ControllerBase
         if (string.IsNullOrEmpty(request.Password)) return Bad("Please enter your password.");
 
         var login = await _alpaca.PostAsync<RemoteLoginResult>("api/Member/MemberLogin", new { phoneNumber = phone, password = request.Password });
-        if (!login.Success) return login.ToError();
+        if (!login.Success)
+            // the remote API returns "Invalid username" despite the input being a phne number and not username for some reason, so I am hard coding this to change it to "phone number"
+            return login.ToError(overrideMessage: currentMessage => 
+            currentMessage.Trim() == "Invalid username or password." ? "Invalid phone number or password." : null);
 
         var token = login.Data?.SuccessToken;
         if (string.IsNullOrEmpty(token)) return Bad("Login failed. Please try again.", 502);
