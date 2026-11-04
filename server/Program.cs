@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using server;
 using server.Services;
 
@@ -6,7 +7,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+// bad requests (for example broken JSON) are answered in the same { success, message } shape as everything else
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var message = context.ModelState.Values
+            .SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage)
+            .FirstOrDefault(m => !string.IsNullOrWhiteSpace(m)) ?? "The request was invalid.";
+
+        return new BadRequestObjectResult(new { success = false, message });
+    };
+});
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -17,7 +30,8 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins("http://localhost:5173")
             .AllowAnyHeader()
-            .AllowAnyMethod();
+            .AllowAnyMethod()
+            .AllowCredentials(); // the session cookie has to travel with every request
     });
 });
 
@@ -31,7 +45,8 @@ builder.Services.AddHttpClient("AlpacaAPI", client =>
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
-// sessions and cookies
+// sessions and cookies (the session is where the remote JWT tokens are kept, so they never reach the browser)
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(10);

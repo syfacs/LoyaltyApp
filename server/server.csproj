@@ -9,7 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
-    <PackageReference Include="SCrypt" Version="2.0.0.2" />
+    <!-- same Scrypt package as the remote API, so we can verify the hashes it returns -->
+    <PackageReference Include="Scrypt.NET" Version="1.3.0" />
   </ItemGroup>
 
 </Project>
