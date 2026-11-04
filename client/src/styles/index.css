@@ -20,9 +20,6 @@ body {
   background: var(--page);
   color: var(--text);
   font: 16px/1.45 var(--font);
-
-  /* a very long word with no spaces wraps instead of running out of its card */
-  overflow-wrap: anywhere;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -411,6 +408,8 @@ textarea.input {
   font-weight: 700;
   background: var(--primary-dark);
   border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+
+  text-wrap: nowrap;
 }
 
 .phone-wrap .input {
@@ -620,7 +619,6 @@ textarea.input {
 
 .pre {
   white-space: pre-line;
-  height: auto;
 }
 
 /* ---------- member home ---------- */
