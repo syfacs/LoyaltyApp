@@ -619,6 +619,7 @@ textarea.input {
 
 .pre {
   white-space: pre-line;
+  overflow-wrap: break-word;
 }
 
 /* ---------- member home ---------- */
